@@ -4,7 +4,7 @@ Kommando is a tool to build command line tools with many nested sub commands. In
 
 ```shell
 # Create a shell alias for your tool
-alias calc=`pwd`/example/kommando.linux
+alias calc=/path/to/repo/example/kommando
 
 calc add 1 3          # 4
 calc sub 5 3          # 2
@@ -14,8 +14,6 @@ calc say hello Earth  # Hello Earth!
 
 ## Getting Started
 
-There are 2 steps to get started:
- - Copy the appropriate binary (ex: `build/kommando.linux`) to the root of your project.
- - Add an alias on your `.bashrc` file or `.zshrc` file to the kommando binary you copied.
+First, copy the `kommando` executable file to the root of your project. It can be compiled using `make` or you can find pre-built under [releases](https://github.com/thani-sh/kommando/releases). The next step is to add an alias on your `.bashrc` file or `.zshrc` file to the kommando binary you copied.
 
-It will search for commands from the directory where it's located. Each sub command can be written in any language/framework you wish as long as they are executable. Check the examples directory for an example with Nodejs and Python.
+It will search for commands from the directory where it's located. Each sub command can be written in any language/framework you wish as long as they are executable. Check the `example` directory on this repo for an example project with Nodejs and Python commands.
