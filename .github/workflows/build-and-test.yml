@@ -1,0 +1,74 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.16'
+    
+    - name: Build kommando CLI
+      run: make build
+    
+    - name: Test add command
+      run: |
+        cd example
+        result=$(./kommando add 1 3)
+        echo "Result: $result"
+        if [ "$result" != "4" ]; then
+          echo "Test failed: expected 4, got $result"
+          exit 1
+        fi
+        echo "✓ add command test passed"
+    
+    - name: Test sub command
+      run: |
+        cd example
+        result=$(./kommando sub 5 3)
+        echo "Result: $result"
+        if [ "$result" != "2" ]; then
+          echo "Test failed: expected 2, got $result"
+          exit 1
+        fi
+        echo "✓ sub command test passed"
+    
+    - name: Test sub command with -i flag
+      run: |
+        cd example
+        result=$(./kommando sub -i 5 3)
+        echo "Result: $result"
+        if [ "$result" != "-2" ]; then
+          echo "Test failed: expected -2, got $result"
+          exit 1
+        fi
+        echo "✓ sub -i command test passed"
+    
+    - name: Test say hello command
+      run: |
+        cd example
+        result=$(./kommando say hello Earth)
+        echo "Result: $result"
+        if [ "$result" != "Hello Earth!" ]; then
+          echo "Test failed: expected 'Hello Earth!', got '$result'"
+          exit 1
+        fi
+        echo "✓ say hello command test passed"
+    
+    - name: Upload kommando binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: kommando-binary
+        path: build/kommando
+        retention-days: 30
