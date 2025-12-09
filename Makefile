@@ -10,4 +10,4 @@ clean:
 
 .PHONY: test
 test:
-	alias
+	go test -v ./...
