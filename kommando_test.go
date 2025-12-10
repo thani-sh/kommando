@@ -9,39 +9,14 @@ import (
 )
 
 func TestKommandoCLI(t *testing.T) {
-	// Get the current working directory
+	// Assume the binary has already been built and copied to example directory
 	cwd, err := os.Getwd()
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
 	}
-
-	// Build the kommando binary for testing
-	buildDir := filepath.Join(cwd, "build")
-	binaryBuildPath := filepath.Join(buildDir, "kommando")
 	
-	// Create build directory if it doesn't exist
-	if err := os.MkdirAll(buildDir, 0755); err != nil {
-		t.Fatalf("Failed to create build directory: %v", err)
-	}
-
-	buildCmd := exec.Command("go", "build", "-o", binaryBuildPath, "./cmd/kommando/...")
-	buildCmd.Dir = cwd
-	if err := buildCmd.Run(); err != nil {
-		t.Fatalf("Failed to build kommando binary: %v", err)
-	}
-
-	// Copy binary to example directory
 	exampleDir := filepath.Join(cwd, "example")
 	binaryPath := filepath.Join(exampleDir, "kommando")
-	
-	input, err := os.ReadFile(binaryBuildPath)
-	if err != nil {
-		t.Fatalf("Failed to read binary: %v", err)
-	}
-	
-	if err := os.WriteFile(binaryPath, input, 0755); err != nil {
-		t.Fatalf("Failed to copy kommando binary to example directory: %v", err)
-	}
 
 	// Test cases
 	tests := []struct {
