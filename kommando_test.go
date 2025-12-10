@@ -9,7 +9,7 @@ import (
 )
 
 func TestKommandoCLI(t *testing.T) {
-	// Assume the binary has already been built and copied to example directory
+	// Binary is built and copied by Makefile build target before tests run
 	cwd, err := os.Getwd()
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
