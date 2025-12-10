@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.16'
+    
+    - name: Build and test
+      run: make test
+    
+    - name: Upload kommando binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: kommando-binary
+        path: build/kommando
+        retention-days: 30

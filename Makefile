@@ -9,5 +9,5 @@ clean:
 	rm example/kommando*
 
 .PHONY: test
-test:
-	alias
+test: build
+	go test -v ./...
