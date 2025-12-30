@@ -19,3 +19,23 @@ First, copy the `kommando` executable file to the root of your project. It can b
 It will search for commands from the directory where it's located. Each sub command can be written in any language/framework you wish as long as they are executable. Check the `example` directory on this repo for an example project with Nodejs and Python commands.
 
 **Note for Windows Users:** This tool is designed for Unix-like environments. If you are developing on Windows, we strongly recommend using [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+## Auto Completion
+
+Kommando supports auto completion for Bash and Zsh. To enable it, you need to add the initialization script to your shell configuration file.
+
+### Bash
+
+Add the following to your `.bashrc` file (replace `calc` with your alias):
+
+```bash
+source <( /path/to/repo/example/kommando --kommando-init-bash calc )
+```
+
+### Zsh
+
+Add the following to your `.zshrc` file (replace `calc` with your alias):
+
+```zsh
+source <( /path/to/repo/example/kommando --kommando-init-zsh calc )
+```
