@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g. v1.0.0)'
+        required: true
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Update VERSION file
+        run: |
+          echo "${{ github.event.inputs.version }}" > VERSION
+
+      - name: Commit and Tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add VERSION
+          git commit -m "Release ${{ github.event.inputs.version }}"
+          git tag ${{ github.event.inputs.version }}
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin ${{ github.event.inputs.version }}
+
+      - name: Build binaries
+        run: |
+          mkdir -p dist
+          GOOS=linux GOARCH=amd64 go build -o dist/kommando-linux-amd64 ./cmd/kommando
+          GOOS=linux GOARCH=arm64 go build -o dist/kommando-linux-arm64 ./cmd/kommando
+          GOOS=darwin GOARCH=amd64 go build -o dist/kommando-darwin-amd64 ./cmd/kommando
+          GOOS=darwin GOARCH=arm64 go build -o dist/kommando-darwin-arm64 ./cmd/kommando
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          files: dist/*
+          draft: false
+          prerelease: false
