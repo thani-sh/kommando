@@ -33,7 +33,9 @@ func TestMain(m *testing.M) {
 	code := m.Run()
 
 	// Cleanup
-	os.Remove(binaryPath)
+	if err := os.Remove(binaryPath); err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to remove binary: %v\n", err)
+	}
 
 	os.Exit(code)
 }
