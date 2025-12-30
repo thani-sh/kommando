@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"syscall"
 )
@@ -96,6 +97,7 @@ func (n *Node) Complete(parts []string) []string {
 				matches = append(matches, name)
 			}
 		}
+		sort.Strings(matches)
 		return matches
 	}
 
@@ -110,6 +112,7 @@ func (n *Node) Complete(parts []string) []string {
 				}
 			}
 		}
+		sort.Strings(matches)
 		return matches
 	}
 

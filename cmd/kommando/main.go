@@ -58,22 +58,34 @@ func main() {
 }
 
 func printBashInit(name string) {
+	binaryPath, err := os.Executable()
+	if err != nil {
+		binaryPath = name
+	}
+	binaryPath, _ = filepath.Abs(binaryPath)
+
 	script := `
 _%[1]s_completion() {
     local cur prev words cword
     _init_completion -n : || return
 
-    local cmd="${words[0]}"
+    local cmd="%[2]s"
     local args=("${words[@]:1}")
 
     COMPREPLY=( $( "$cmd" --kommando-completion "${args[@]}" ) )
 }
 complete -F _%[1]s_completion %[1]s
 `
-	fmt.Printf(script, name)
+	fmt.Printf(script, name, binaryPath)
 }
 
 func printZshInit(name string) {
+	binaryPath, err := os.Executable()
+	if err != nil {
+		binaryPath = name
+	}
+	binaryPath, _ = filepath.Abs(binaryPath)
+
 	script := `
 #compdef %[1]s
 
@@ -90,12 +102,12 @@ _%[1]s() {
     # Zsh arrays are 1-based. words[1] is the command.
     # We want words[2] to the end.
 
-    completions=($($words[1] --kommando-completion "${words[2,-1]}"))
+    completions=("${(@f)$( "%[2]s" --kommando-completion "${words[2,-1]}" )}")
 
     compadd -a completions
 }
 
 compdef _%[1]s %[1]s
 `
-	fmt.Printf(script, name)
+	fmt.Printf(script, name, binaryPath)
 }

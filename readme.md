@@ -17,3 +17,23 @@ calc say hello Earth  # Hello Earth!
 First, copy the `kommando` executable file to the root of your project. It can be compiled using `make` or you can find pre-built under [releases](https://github.com/thani-sh/kommando/releases). The next step is to add an alias on your `.bashrc` file or `.zshrc` file to the kommando binary you copied.
 
 It will search for commands from the directory where it's located. Each sub command can be written in any language/framework you wish as long as they are executable. Check the `example` directory on this repo for an example project with Nodejs and Python commands.
+
+## Auto Completion
+
+Kommando supports auto completion for Bash and Zsh. To enable it, you need to add the initialization script to your shell configuration file.
+
+### Bash
+
+Add the following to your `.bashrc` file (replace `calc` with your alias):
+
+```bash
+source <( /path/to/repo/example/kommando --kommando-init-bash calc )
+```
+
+### Zsh
+
+Add the following to your `.zshrc` file (replace `calc` with your alias):
+
+```zsh
+source <( /path/to/repo/example/kommando --kommando-init-zsh calc )
+```
