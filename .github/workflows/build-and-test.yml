@@ -27,7 +27,9 @@ jobs:
         version: latest
 
     - name: Build and test
-      run: make test
+      run: |
+        go build -o build/kommando ./cmd/kommando/...
+        go test -v ./...
     
     - name: Upload kommando binary
       uses: actions/upload-artifact@v4

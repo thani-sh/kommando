@@ -14,6 +14,6 @@ calc say hello Earth  # Hello Earth!
 
 ## Getting Started
 
-First, copy the `kommando` executable file to the root of your project. It can be compiled using `make` or you can find pre-built under [releases](https://github.com/thani-sh/kommando/releases). The next step is to add an alias on your `.bashrc` file or `.zshrc` file to the kommando binary you copied.
+First, copy the `kommando` executable file to the root of your project. It can be compiled using `go build -o kommando ./cmd/kommando/...` or you can find pre-built binaries under [releases](https://github.com/thani-sh/kommando/releases). The next step is to add an alias in your `.bashrc` or `.zshrc` file pointing to the kommando binary you copied.
 
 It will search for commands from the directory where it's located. Each sub command can be written in any language/framework you wish as long as they are executable. Check the `example` directory on this repo for an example project with Nodejs and Python commands.

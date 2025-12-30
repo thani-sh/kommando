@@ -7,14 +7,12 @@ This repository contains the source code for `kommando`, a Go project.
 - `cmd/`: Contains the main application entry point.
 - `example/`: Contains example usage of the library.
 - `kommando_test.go`: Contains tests for the library.
-- `Makefile`: Contains build and test commands.
-
 ## Development
 
 ### Building and Testing
 
-- **Run Tests**: Use `make test` to build the project and run all tests.
-- **Build**: Use `make build` (or `go build`) to compile the project. The binary is output to `build/kommando`.
+- **Run Tests**: Use `go test ./...` to run all tests. The tests will automatically build the binary required for integration testing.
+- **Build**: Use `go build -o build/kommando ./cmd/kommando/...` to compile the project.
 
 ### Coding Conventions
 
@@ -24,6 +22,6 @@ This repository contains the source code for `kommando`, a Go project.
 
 ## AI Agent Guidelines
 
-- When making changes, always run `make test` to ensure no regressions.
+- When making changes, always run `go test ./...` to ensure no regressions.
 - If adding new features, add corresponding tests.
 - Check `go.mod` for dependencies.
