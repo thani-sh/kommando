@@ -1,7 +1,6 @@
 package kommando
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -64,7 +63,7 @@ func (n *Node) Kids() map[string]*Node {
 		return nil
 	}
 	kids := make(map[string]*Node)
-	files, err := ioutil.ReadDir(n.Path)
+	files, err := os.ReadDir(n.Path)
 	if err != nil {
 		return nil
 	}
