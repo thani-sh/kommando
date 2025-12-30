@@ -83,3 +83,41 @@ func (n *Node) Help() {
 		println(" * " + name)
 	}
 }
+
+func (n *Node) Complete(parts []string) []string {
+	if n.Kids() == nil {
+		return nil
+	}
+
+	if len(parts) == 0 {
+		var matches []string
+		for name, node := range n.Kids() {
+			if node.IsDir || node.IsExe {
+				matches = append(matches, name)
+			}
+		}
+		return matches
+	}
+
+	if len(parts) == 1 {
+		prefix := parts[0]
+		var matches []string
+		for name, node := range n.Kids() {
+			if strings.HasPrefix(name, prefix) {
+				// Only suggest if it is a directory or executable
+				if node.IsDir || node.IsExe {
+					matches = append(matches, name)
+				}
+			}
+		}
+		return matches
+	}
+
+	part := parts[0]
+	child := n.Kids()[part]
+	if child != nil {
+		return child.Complete(parts[1:])
+	}
+
+	return nil
+}
