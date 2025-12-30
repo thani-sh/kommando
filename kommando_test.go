@@ -20,11 +20,6 @@ func TestMain(m *testing.M) {
 	exampleDir := filepath.Join(cwd, "example")
 	binaryPath := filepath.Join(exampleDir, "kommando")
 
-	// Check if running on Windows to add .exe extension
-	if os.PathSeparator == '\\' {
-		binaryPath += ".exe"
-	}
-
 	// Build the kommando binary
 	cmd := exec.Command("go", "build", "-o", binaryPath, "./cmd/kommando/...")
 	cmd.Stdout = os.Stdout
@@ -51,9 +46,6 @@ func TestKommandoCLI(t *testing.T) {
 	
 	exampleDir := filepath.Join(cwd, "example")
 	binaryPath := filepath.Join(exampleDir, "kommando")
-	if os.PathSeparator == '\\' {
-		binaryPath += ".exe"
-	}
 
 	// Test cases
 	tests := []struct {
